@@ -28,8 +28,6 @@ API.prototype = {
   // sequential convert
   startConvert: function() {
   },
-  stopConvert: function() {
-  },
 
   parseJSON: function(data) {
     this.playlistSize = data.resultCount;
