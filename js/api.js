@@ -39,6 +39,7 @@ API.prototype = {
         album:  item.collectionName,
         artist: item.artistName,
         trackUrl: item.trackViewUrl,
+        m4aUrl: item.previewUrl,
         mp3Url: null,
         artworkUrl: item.artworkUrl100.replace("100x100-75.jpg", "400x400-75.jpg")
       });
