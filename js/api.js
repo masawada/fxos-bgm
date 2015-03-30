@@ -29,17 +29,16 @@ API.prototype = {
   },
 
   parseJSON: function(data) {
-    data.results.foreach(function(item){
+    data.results.forEach(function(item){
       this.playlist.push({
         title:  item.trackName,
         album:  item.collectionName,
         artist: item.artistName,
         trackUrl: item.trackViewUrl,
         mp3Url: null,
-        artworkUrl: item.artWorkUrl100
-      })
+        artworkUrl: item.artworkUrl100.replace("100x100-75.jpg", "400x400-75.jpg")
+      });
     }.bind(this));
-    console.log(this.playlist);
   },
   // API request
   fetchPreviewJSON: function(term) {
@@ -48,7 +47,7 @@ API.prototype = {
       url: "http://itunes.apple.com/search",
       type: "GET",
       dataType: "json",
-      success: this.parseJSON,
+      success: this.parseJSON.bind(this),
       data: {
         term: term,
         country: "JP",
