@@ -6,6 +6,7 @@ var API = function() {
     } catch(e) {}
   };
 
+  this.encodeQueue = [];
   this.playlist = [];
   this.apiBaseUrl = "http://52.68.23.123";
 };
@@ -32,7 +33,7 @@ API.prototype = {
 
   parseJSON: function(data) {
     data.results.forEach(function(item){
-      this.playlist.push({
+      this.encodeQueue.push({
         title:  item.trackName,
         album:  item.collectionName,
         artist: item.artistName,
