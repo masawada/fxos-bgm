@@ -20,13 +20,13 @@ API.prototype = {
   },
   initWithTerm: function(term) {
     this.initProperties();
-    this.fetchPreviewJSON(term)
+    return this.fetchPreviewJSON(term)
     .then(this.parseJSON.bind(this))
     .then(this.prefetch.bind(this));
   },
 
   prefetch: function() {
-    this.convertRequest()
+    return this.convertRequest()
     .then(this.convertRequest.bind(this))
     .then(this.convertRequest.bind(this))
     .then(this.convertRequest.bind(this))
