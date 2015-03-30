@@ -1,33 +1,75 @@
 var API = function() {
+  // override jQuery xhr
+  jQuery.ajaxSettings.xhr = function() {
+    try {
+      return new XMLHttpRequest({mozSystem: true});
+    } catch(e) {}
+  };
+
+  this.encodeQueue = [];
   this.playlist = [];
+  this.playlistSize = 0;
+  this.apiEndpoint = "http://52.68.23.123/cgi-bin/music.py";
 };
 
 API.prototype = {
-  startBuffer: function(term) {
-    // 検索&連続コンバートの開始
-    this.fetchPreviewJSON(term);
-    this.startConvert();
+  initProperties: function() {
+    this.encodeQueue = [];
+    this.playlist = [];
+    this.playlistSize = 0;
   },
-  stopBuffer: function() {
-    this.stopConvert();
+  initWithTerm: function(term) {
+    this.initProperties();
+    this.fetchPreviewJSON(term)
+    .then(this.parseJSON.bind(this))
+    .then(this.prefetch.bind(this));
   },
 
-  startConvert: function() {
-    // observeStatusでエンコード可能かチェック
-    // 未エンコードのAAC URLをサーバに投げる
+  prefetch: function() {
   },
-  stopConvert: function() {
-    // 連続コンバートをとりやめる
+
+  parseJSON: function(data) {
+    this.playlistSize = data.resultCount;
+    data.results.forEach(function(item){
+      this.encodeQueue.push({
+        title:  item.trackName,
+        album:  item.collectionName,
+        artist: item.artistName,
+        trackUrl: item.trackViewUrl,
+        m4aUrl: item.previewUrl,
+        mp3Url: null,
+        artworkUrl: item.artworkUrl100.replace("100x100-75.jpg", "400x400-75.jpg")
+      });
+    }.bind(this));
   },
 
   // API request
   fetchPreviewJSON: function(term) {
     // iTunes APIからJSONを取得してパース
+    return $.ajax({
+      url: "http://itunes.apple.com/search",
+      type: "GET",
+      dataType: "json",
+      data: {
+        term: term,
+        country: "JP",
+        media: "music",
+        limit: "200"
+      },
+    });
   },
   requestConvert: function() {
     // AWSにエンコードリクエスト
-  },
-  observeStatus: function() {
-    // ステータスのチェック
+    var rnd = Math.floor(Math.random * this.encodeQueue.length);
+    var item = this.encodeQueue.splice(rnd, 1)[0];
+    $.ajax({
+      url: this.apiEndpoint,
+      type: "GET",
+      dataType: "json",
+      success: function(data){console.log(data);},
+      data: {
+        uri: item.m4aUrl
+      }
+    });
   }
 };
