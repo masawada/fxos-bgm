@@ -26,6 +26,11 @@ API.prototype = {
   },
 
   prefetch: function() {
+    this.requestConvert()
+    .then(this.requestConvert.bind(this))
+    .then(this.requestConvert.bind(this))
+    .then(this.requestConvert.bind(this))
+    .then(this.requestConvert.bind(this));
   },
 
   parseJSON: function(data) {
@@ -60,16 +65,22 @@ API.prototype = {
   },
   requestConvert: function() {
     // AWSにエンコードリクエスト
+    var d = new $.Deferred();
     var rnd = Math.floor(Math.random * this.encodeQueue.length);
     var item = this.encodeQueue.splice(rnd, 1)[0];
     $.ajax({
       url: this.apiEndpoint,
       type: "GET",
       dataType: "json",
-      success: function(data){console.log(data);},
+      success: function(data){
+        item.mp3Url = data.URI;
+        this.playlist.push(item);
+        d.resolve();
+      }.bind(this),
       data: {
         uri: item.m4aUrl
       }
     });
+    return d.promise();
   }
 };
