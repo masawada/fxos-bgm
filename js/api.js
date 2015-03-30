@@ -9,7 +9,7 @@ var API = function() {
   this.encodeQueue = [];
   this.playlist = [];
   this.playlistSize = 0;
-  this.apiEndpoint = "http://52.68.23.123/cgi-bin/convert.py";
+  this.apiEndpoint = "http://52.68.23.123/cgi-bin/music.py";
 };
 
 API.prototype = {
@@ -58,15 +58,19 @@ API.prototype = {
       },
     });
   },
-  requestConvert: function(uri) {
+  requestConvert: function() {
     // AWSにエンコードリクエスト
+    var rnd = Math.floor(Math.random * this.encodeQueue.length);
+    var item = this.encodeQueue[rnd];
+    delete this.encodeQueue[rnd];
+    this.encodeQueue.splice(rnd, 1);
     $.ajax({
       url: this.apiEndpoint,
       type: "GET",
       dataType: "json",
       success: function(data){console.log(data);},
       data: {
-        uri: uri
+        uri: item.m4aUrl
       },
     });
   }
