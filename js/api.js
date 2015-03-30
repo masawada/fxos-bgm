@@ -8,6 +8,7 @@ var API = function() {
 
   this.encodeQueue = [];
   this.playlist = [];
+  this.playlistSize = 0;
   this.apiBaseUrl = "http://52.68.23.123";
 };
 
@@ -15,6 +16,7 @@ API.prototype = {
   initProperties: function() {
     this.encodeQueue = [];
     this.playlist = [];
+    this.playlistSize = 0;
   },
   initWithTerm: function(term) {
     this.initProperties();
@@ -33,6 +35,7 @@ API.prototype = {
   },
 
   parseJSON: function(data) {
+    this.playlistSize = data.resultCount;
     data.results.forEach(function(item){
       this.encodeQueue.push({
         title:  item.trackName,
