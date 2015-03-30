@@ -22,11 +22,10 @@ API.prototype = {
     this.initProperties();
     this.fetchPreviewJSON(term)
     .then(this.parseJSON.bind(this))
-    .then(this.startConvert.bind(this));
+    .then(this.prefetch.bind(this));
   },
 
-  // sequential convert
-  startConvert: function() {
+  prefetch: function() {
   },
 
   parseJSON: function(data) {
