@@ -12,14 +12,15 @@ var API = function() {
 };
 
 API.prototype = {
-  startBuffer: function(term) {
-    // 検索&連続コンバートの開始
+  initProperties: function() {
+    this.encodeQueue = [];
+    this.playlist = [];
+  },
+  initWithTerm: function(term) {
+    this.initProperties();
     this.fetchPreviewJSON(term)
     .then(this.parseJSON.bind(this))
     .then(this.startConvert.bind(this));
-  },
-  stopBuffer: function() {
-    this.stopConvert();
   },
 
   // sequential convert

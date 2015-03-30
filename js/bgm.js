@@ -4,7 +4,7 @@ var BGM = function() {
 
 BGM.prototype = {
   search: function(term) {
-    this.api.startBuffer(term);
+    this.api.initWithTerm(term);
   },
 
   play: function() {
