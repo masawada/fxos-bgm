@@ -14,7 +14,9 @@
     "url": "http://example.com"
   },
   "type": "privileged",
-  "permissions": {},
+  "permissions": {
+    "systemXHR": {}
+  },
   "installs_allowed_from": [
     "*"
   ],

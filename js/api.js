@@ -1,4 +1,11 @@
 var API = function() {
+  // override jQuery xhr
+  jQuery.ajaxSettings.xhr = function() {
+    try {
+      return new XMLHttpRequest({mozSystem: true});
+    } catch(e) {}
+  };
+
   this.playlist = [];
 };
 
@@ -21,30 +28,29 @@ API.prototype = {
   },
 
   parseJSON: function(data) {
-    console.log(data)
+    console.log(data);
   },
   // API request
   fetchPreviewJSON: function(term) {
     // iTunes APIからJSONを取得してパース
     $.ajax({
-      url: "itunes.apple.com/search",
+      url: "http://itunes.apple.com/search",
       type: "GET",
       dataType: "json",
-      success: this.parseJSON
+      success: this.parseJSON,
       data: {
-        term: term
-        country: "JP"
-        media: "music"
+        term: term,
+        country: "JP",
+        media: "music",
         limit: "200"
       },
     });
-    return JSON.parse(jsonString);
   },
   requestConvert: function() {
     // AWSにエンコードリクエスト
   },
   observeStatus: function() {
     // ステータスのチェック
-    
+
   }
 };
