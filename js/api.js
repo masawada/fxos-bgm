@@ -7,6 +7,7 @@ var API = function() {
   };
 
   this.playlist = [];
+  this.apiBaseUrl = "http://52.68.23.123"
 };
 
 API.prototype = {
@@ -28,7 +29,17 @@ API.prototype = {
   },
 
   parseJSON: function(data) {
-    console.log(data);
+    data.results.foreach(function(item){
+      this.playlist.push({
+        title:  item.trackName,
+        album:  item.collectionName,
+        artist: item.artistName,
+        trackUrl: item.trackViewUrl,
+        mp3Url: null,
+        artworkUrl: item.artWorkUrl100
+      })
+    }.bind(this));
+    console.log(this.playlist);
   },
   // API request
   fetchPreviewJSON: function(term) {
@@ -48,6 +59,7 @@ API.prototype = {
   },
   requestConvert: function() {
     // AWSにエンコードリクエスト
+    
   },
   observeStatus: function() {
     // ステータスのチェック
