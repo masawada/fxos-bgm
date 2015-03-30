@@ -9,7 +9,7 @@ var API = function() {
   this.encodeQueue = [];
   this.playlist = [];
   this.playlistSize = 0;
-  this.apiBaseUrl = "http://52.68.23.123";
+  this.apiEndpoint = "http://52.68.23.123/cgi-bin/convert.py";
 };
 
 API.prototype = {
@@ -27,11 +27,8 @@ API.prototype = {
 
   // sequential convert
   startConvert: function() {
-    // observeStatusでエンコード可能かチェック
-    // 未エンコードのAAC URLをサーバに投げる
   },
   stopConvert: function() {
-    // 連続コンバートをとりやめる
   },
 
   parseJSON: function(data) {
@@ -48,6 +45,7 @@ API.prototype = {
       });
     }.bind(this));
   },
+
   // API request
   fetchPreviewJSON: function(term) {
     // iTunes APIからJSONを取得してパース
@@ -66,10 +64,10 @@ API.prototype = {
   requestConvert: function(uri) {
     // AWSにエンコードリクエスト
     $.ajax({
-      url: this.apiBaseUrl + "/music",
+      url: this.apiEndpoint,
       type: "GET",
       dataType: "json",
-      success: this.parseJSON.bind(this),
+      success: function(data){console.log(data);},
       data: {
         uri: uri
       },
