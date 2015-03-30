@@ -59,7 +59,7 @@ API.prototype = {
   requestConvert: function(uri) {
     // AWSにエンコードリクエスト
     $.ajax({
-      url: this.apiBaseUrl
+      url: this.apiBaseUrl + "/music",
       type: "GET",
       dataType: "json",
       success: this.parseJSON.bind(this),
