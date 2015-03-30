@@ -26,11 +26,11 @@ API.prototype = {
   },
 
   prefetch: function() {
-    this.requestConvert()
-    .then(this.requestConvert.bind(this))
-    .then(this.requestConvert.bind(this))
-    .then(this.requestConvert.bind(this))
-    .then(this.requestConvert.bind(this));
+    this.convertRequest()
+    .then(this.convertRequest.bind(this))
+    .then(this.convertRequest.bind(this))
+    .then(this.convertRequest.bind(this))
+    .then(this.convertRequest.bind(this));
   },
 
   parseJSON: function(data) {
@@ -63,7 +63,7 @@ API.prototype = {
       },
     });
   },
-  requestConvert: function() {
+  convertRequest: function() {
     // AWSにエンコードリクエスト
     var d = new $.Deferred();
     var rnd = Math.floor(Math.random * this.encodeQueue.length);
