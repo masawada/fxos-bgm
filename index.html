@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content="A privileged app stub">
     <link rel="stylesheet" href="/bower_components/angular-material/angular-material.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body ng-controller="MainCtrl">
 <md-toolbar md-scroll-shrink>
@@ -24,12 +25,12 @@
             <md-button ng-click="onPlayOrPause()">
                 <md-icon md-font-icon="fa-pause"
                          class="fa"
-                         ng-hide="ctrlinfo.isPlay">
+                         ng-show="ctrlinfo.isPlay">
                 </md-icon>
 
                 <md-icon md-font-icon="fa-play"
                          class="fa"
-                         ng-hide="!ctrlinfo.isPlay">
+                         ng-show="!ctrlinfo.isPlay">
                 </md-icon>
             </md-button>
             <md-button ng-click="onPlayNext()">
@@ -41,6 +42,14 @@
     </div>
 </md-toolbar>
 <md-content style="height: 600px;width: 320px;margin: auto;">
+    <md-input-container layout="row">
+        <div flex>
+            <input ng-model="ctrlInfo.word">
+        </div>
+        <md-button class="md-raised md-primary" ng-click="onSearch()" flex="25">
+            Search
+        </md-button>
+    </md-input-container>
     <md-card>
         <img ng-src="{{music.artworkUrl}}" alt="">
         <md-card-content>
