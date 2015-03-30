@@ -13,13 +13,15 @@ var API = function() {
 API.prototype = {
   startBuffer: function(term) {
     // 検索&連続コンバートの開始
-    this.fetchPreviewJSON(term);
-    this.startConvert();
+    this.fetchPreviewJSON(term)
+    .then(this.parseJSON.bind(this))
+    .then(this.startConvert.bind(this));
   },
   stopBuffer: function() {
     this.stopConvert();
   },
 
+  // sequential convert
   startConvert: function() {
     // observeStatusでエンコード可能かチェック
     // 未エンコードのAAC URLをサーバに投げる
@@ -43,11 +45,10 @@ API.prototype = {
   // API request
   fetchPreviewJSON: function(term) {
     // iTunes APIからJSONを取得してパース
-    $.ajax({
+    return $.ajax({
       url: "http://itunes.apple.com/search",
       type: "GET",
       dataType: "json",
-      success: this.parseJSON.bind(this),
       data: {
         term: term,
         country: "JP",
