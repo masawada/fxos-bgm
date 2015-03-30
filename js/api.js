@@ -20,14 +20,31 @@ API.prototype = {
     // 連続コンバートをとりやめる
   },
 
+  parseJSON: function(data) {
+    console.log(data)
+  },
   // API request
   fetchPreviewJSON: function(term) {
     // iTunes APIからJSONを取得してパース
+    $.ajax({
+      url: "itunes.apple.com/search",
+      type: "GET",
+      dataType: "json",
+      success: this.parseJSON
+      data: {
+        term: term
+        country: "JP"
+        media: "music"
+        limit: "200"
+      },
+    });
+    return JSON.parse(jsonString);
   },
   requestConvert: function() {
     // AWSにエンコードリクエスト
   },
   observeStatus: function() {
     // ステータスのチェック
+    
   }
 };
