@@ -7,7 +7,7 @@ var API = function() {
   };
 
   this.playlist = [];
-  this.apiBaseUrl = "http://52.68.23.123"
+  this.apiBaseUrl = "http://52.68.23.123";
 };
 
 API.prototype = {
@@ -58,7 +58,7 @@ API.prototype = {
   },
   requestConvert: function() {
     // AWSにエンコードリクエスト
-    
+
   },
   observeStatus: function() {
     // ステータスのチェック
