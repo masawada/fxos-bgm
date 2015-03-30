@@ -61,9 +61,7 @@ API.prototype = {
   requestConvert: function() {
     // AWSにエンコードリクエスト
     var rnd = Math.floor(Math.random * this.encodeQueue.length);
-    var item = this.encodeQueue[rnd];
-    delete this.encodeQueue[rnd];
-    this.encodeQueue.splice(rnd, 1);
+    var item = this.encodeQueue.splice(rnd, 1)[0];
     $.ajax({
       url: this.apiEndpoint,
       type: "GET",
@@ -71,7 +69,7 @@ API.prototype = {
       success: function(data){console.log(data);},
       data: {
         uri: item.m4aUrl
-      },
+      }
     });
   }
 };
