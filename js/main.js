@@ -29,10 +29,29 @@ var testJSON = [{
         trackUrl: "https://itunes.apple.com/jp/album/no.1-feat.g.rina/id623204999?i=623205057&uo=4"
     }];
 
-app.controller('MainCtrl', function ($scope) {
+app.controller('MainCtrl', function ($scope, $element) {
     $scope.ctrlInfo = {
         level: 50,
         isPlay: false
     };
+    var context = new AudioContext();
+    var audio = new Audio();
+    audio.addEventListener('loadstart', function () {
+        var source = context.createMediaElementSource(audio)
+        source.connect(context.destination);
+        source.noteOn(0);
+
+        //var analyser = context.createAnalyser();
+        //audio.play()
+    })
+//// url = URL.createObjectURL(file_or_blob)
+    audio.src = 'http://www.hmix.net/music/n/n46.mp3';
     $scope.music = testJSON[Math.floor(testJSON.length * Math.random())];
-})
+
+    $scope.onPlayOrPause = function () {
+
+    };
+    $scope.onPlayNext = function () {
+
+    }
+});
