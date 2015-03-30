@@ -56,9 +56,17 @@ API.prototype = {
       },
     });
   },
-  requestConvert: function() {
+  requestConvert: function(uri) {
     // AWSにエンコードリクエスト
-
+    $.ajax({
+      url: this.apiBaseUrl
+      type: "GET",
+      dataType: "json",
+      success: this.parseJSON.bind(this),
+      data: {
+        uri: uri
+      },
+    });
   },
   observeStatus: function() {
     // ステータスのチェック
