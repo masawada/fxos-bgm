@@ -68,9 +68,5 @@ API.prototype = {
         uri: uri
       },
     });
-  },
-  observeStatus: function() {
-    // ステータスのチェック
-
   }
 };
